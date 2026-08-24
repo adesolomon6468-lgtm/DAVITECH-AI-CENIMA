@@ -1,12 +1,12 @@
 {
   "name": "davitech-ai-cinema",
-  "version": "0.4.1",
+  "version": "0.4.25",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "next lint"
   },
   "dependencies": {
     "next": "16.3.2",
@@ -16,11 +16,12 @@
     "@supabase/supabase-js": "2.57.4"
   },
   "devDependencies": {
-    "typescript": "5.8.3",
-    "@types/node": "22.15.21",
-    "@types/react": "19.1.5",
-    "@types/react-dom": "19.1.5",
-    "eslint": "9.25.1",
-    "eslint-config-next": "16.3.2"
+    "typescript": "5.9.2",
+    "@types/node": "24.3.0",
+    "@types/react": "19.1.12",
+    "@types/react-dom": "19.1.9"
+  },
+  "engines": {
+    "node": ">=20.9.0"
   }
 }
