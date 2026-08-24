@@ -148,7 +148,62 @@ export default function Home() {
     )
   }
 
-  function demoRender(index: number) {
+    async function renderScene(index: number) {
+    const scene = scenes[index]
+
+    if (!scene?.prompt.trim()) {
+      updateScene({ status: 'failed' })
+      return
+    }
+
+    setScenes((items) =>
+      items.map((item, currentIndex) =>
+        currentIndex === index
+          ? { ...item, status: 'rendering' }
+          : item,
+      ),
+    )
+
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          prompt: scene.prompt,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(
+          data?.error || 'Video generation request failed.',
+        )
+      }
+
+      setScenes((items) =>
+        items.map((item, currentIndex) =>
+          currentIndex === index
+            ? { ...item, status: 'processing' }
+            : item,
+        ),
+      )
+
+      console.log('Replicate generation started:', data)
+    } catch (error) {
+      console.error('Generation error:', error)
+
+      setScenes((items) =>
+        items.map((item, currentIndex) =>
+          currentIndex === index
+            ? { ...item, status: 'failed' }
+            : item,
+        ),
+      )
+    }
+             }
     setScenes((items) =>
       items.map((scene, currentIndex) =>
         currentIndex === index
@@ -178,12 +233,13 @@ export default function Home() {
     }, 1900)
   }
 
-  function renderAll() {
-    scenes.forEach((_, index) => {
-      setTimeout(() => demoRender(index), index * 250)
+    function renderAll() {
+    scenes.forEach((scene, index) => {
+      if (scene.prompt.trim()) {
+        setTimeout(() => renderScene(index), index * 250)
+      }
     })
-  }
-
+                  }
   return (
     <main>
       <header>
@@ -687,8 +743,8 @@ export default function Home() {
 
                   <div className="row">
                     <button
-                      onClick={() => demoRender(selected)}
-                    >
+                      onClick={() => renderScene(selected)}
+                    
                       Render Scene
                     </button>
 
