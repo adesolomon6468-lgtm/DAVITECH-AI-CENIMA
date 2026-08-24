@@ -1,18 +1,22 @@
-# DEPLOY NOW — DAVITECH AI CINEMA
+# DAVITECH AI CINEMA v0.4.1 — DEPLOY NOW
 
-Fastest path: GitHub → Vercel → Supabase.
+This package is arranged with the Next.js application at the repository root.
 
-1. Upload this entire folder to a new GitHub repository named `davitech-ai-cinema`.
-2. In Vercel choose Add New Project → Import the GitHub repository → Deploy. Vercel supports zero-config Next.js deployment.
-3. In Supabase create a new project.
-4. Open Supabase SQL Editor and run `supabase/schema.sql`.
-5. In Vercel Project Settings → Environment Variables add:
-   NEXT_PUBLIC_SUPABASE_URL
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-   DAVITECH_VIDEO_PROVIDER=demo
-6. Redeploy.
+GitHub repository should show these directly at the top level:
+- package.json
+- app/
+- public/
+- next.config.mjs
+- tsconfig.json
+- vercel.json
 
-The app itself works without Supabase through local browser persistence. Supabase becomes the cloud persistence layer once the client integration is wired with the supplied schema and credentials.
+Vercel:
+- Framework: Next.js
+- Root Directory: `./` (default)
+- Build Command: `next build` (default)
+- Output Directory: `.next` (default)
+- Environment Variables: none required for local/demo mode
 
-REAL AI GENERATION:
-The final missing external component is a video-generation provider or self-hosted GPU worker. The app already exposes `/api/jobs` and a provider setting so this component remains replaceable.
+Important: do not point Vercel at `DAVITECH_AI_CINEMA_v0_4`.
+
+The app currently uses a local demo render provider. Real AI video generation requires a provider/GPU connection later.
